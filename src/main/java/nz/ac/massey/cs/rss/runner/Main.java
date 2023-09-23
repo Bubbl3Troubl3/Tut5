@@ -17,7 +17,6 @@ public class Main {
         JAXBContext jc = JAXBContext.newInstance("nz.ac.massey.cs.sdc.parsers");
         Unmarshaller parser = jc.createUnmarshaller();
         File file = new File("herald.xml");
-        List<JAXBElement> jaxbElementList = new ArrayList<>();
 
         Rss rss = (Rss) parser.unmarshal(file);
         RssChannel rssChannel = rss.getChannel();
@@ -30,14 +29,13 @@ public class Main {
             List<Object> objList = new ArrayList<>();
             Map<QName, String> attrMap = new HashMap<>();
             objList = rssItem.getTitleOrDescriptionOrLink();
-            attrMap = rssItem.getOtherAttributes();
             JAXBElement jaxbElement = null;
-            for (Object o : objList){
-                switch (((JAXBElement)o).getName().toString()){
+            for (Object obj : objList){
+                switch (((JAXBElement)obj).getName().toString()){
                     case "title":
                     case "link":
                     case "description":
-                        System.out.println(((JAXBElement)o).getName()+": "+((JAXBElement)o).getValue());
+                        System.out.println(((JAXBElement)obj).getName()+": "+((JAXBElement)obj).getValue());
                     default:
                         continue;
                 }
